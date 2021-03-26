@@ -1,7 +1,9 @@
 import React from "react";
 import { useFormik, Field, Formik, Form } from "formik";
+import { addOwnCharacter } from "../../actions";
+import {connect} from "react-redux"
 
-const AddNewCharacterForm = () => {
+const AddNewCharacterForm = ({addOwnCharacter}) => {
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -9,7 +11,7 @@ const AddNewCharacterForm = () => {
             imageUrl: "",
         },
         onSubmit: (values, actions) => {
-            console.log(values)
+            addOwnCharacter(values)
             actions.resetForm({})
         },
     });
@@ -53,4 +55,8 @@ const AddNewCharacterForm = () => {
     );
 };
 
-export default AddNewCharacterForm;
+const mapDispatchToProps = {
+    addOwnCharacter
+}
+
+export default connect(null, mapDispatchToProps)(AddNewCharacterForm);

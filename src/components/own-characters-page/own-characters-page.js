@@ -1,7 +1,15 @@
-import React from 'react';
-import OwnCharacterItem from '../own-character-item/own-character-item';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import OwnCharacterItem from "../own-character-item/own-character-item";
 
-const OwnCharactersPage = ({characters}) => {
+const OwnCharactersPage = ({ ownCharacters }) => {
+    const [characters, setCharacters] = useState();
+
+    useEffect(() => {
+        setCharacters(ownCharacters);
+    }, [ownCharacters]);
+
+    if (!characters) return <div>There is no characters</div>;
     return (
         <>
             <ul>
@@ -9,8 +17,7 @@ const OwnCharactersPage = ({characters}) => {
                     <OwnCharacterItem
                         name={character.name}
                         gender={character.gender}
-                        image={character.image}
-                        id={character.id}
+                        image={character.imageUrl}
                     />
                 ))}
             </ul>
@@ -18,4 +25,10 @@ const OwnCharactersPage = ({characters}) => {
     );
 };
 
-export default OwnCharactersPage;
+const mapStateToProps = ({ ownCharacters }) => {
+    return {
+        ownCharacters,
+    };
+};
+
+export default connect(mapStateToProps)(OwnCharactersPage);
