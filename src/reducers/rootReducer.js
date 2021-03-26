@@ -1,6 +1,7 @@
 const initialState = {
     ownCharacters: [],
-    characters: []
+    characters: [],
+    allCharacters: []
 }
 
 function reducer(state = initialState, action) {
@@ -10,10 +11,15 @@ function reducer(state = initialState, action) {
                 ...state,
                 ownCharacters: [...state.ownCharacters, action.payload]
             };
-        case "GET_ALL_CHARACTERS":
+        case "GET_CHARACTERS":
             return {
                 ...state,
                 characters: action.payload
+            }
+        case "GET_ALL_CHARACTERS":
+            return {
+                ...state,
+                allCharacters: [...state.allCharacters, action.payload]
             }
             default: return state;
     }

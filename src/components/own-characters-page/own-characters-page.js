@@ -11,8 +11,8 @@ const OwnCharactersPage = ({ ownCharacters }) => {
 
     if (!characters) return <div>There is no characters</div>;
     return (
-        <>
-            <ul>
+        <div className="container">
+            <div className="row justify-content-center">
                 {characters.map((character) => (
                     <OwnCharacterItem
                         name={character.name}
@@ -20,8 +20,8 @@ const OwnCharactersPage = ({ ownCharacters }) => {
                         image={character.imageUrl}
                     />
                 ))}
-            </ul>
-        </>
+            </div>
+        </div>
     );
 };
 

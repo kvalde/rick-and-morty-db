@@ -5,4 +5,18 @@ const addOwnCharacter = (ownCharacter) => {
     }
 }
 
-export {addOwnCharacter}
+const getCharacters = (characters) => {
+    return {
+        type: 'GET_CHARACTERS',
+        payload: characters
+    }
+}
+
+// const getAllCharacters = (allCharacters) => {
+//     return {
+//         type: 'GET_ALL_CHARACTERS',
+//         payload: allCharacters
+//     }
+// }
+
+export {addOwnCharacter, getCharacters}

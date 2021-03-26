@@ -1,19 +1,20 @@
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
-const CharacterItem = ({name, status, gender, image, id}) => {
+const CharacterItem = ({ name, status, gender, image, id }) => {
     return (
         <>
-            <li key={id}>
-                <Link to = {`/${id}`}>
-                    <div className="menu__title">Name: {name}</div>
-                    <img className="menu__img" src={image} alt={name}></img>
-                    <div className="menu__title">Status: {status}</div>
-                    <div className="menu__title">Gender: {gender}</div>
+            <div className="card col-12 m-3" style={{ width: "18rem" }} key={id}>
+                <Link to={`/${id}`}>
+                    <img className="card-img-top" src={image} alt={name}></img>
+                    <div className="card-body">
+                        <div className="card-title">Name: {name}</div>
+                        <div className="card-title">Status: {status}</div>
+                        <div className="card-title">Gender: {gender}</div>
+                    </div>
                 </Link>
-            </li>
-        
+            </div>
         </>
-    )
-}
+    );
+};
 
-export default CharacterItem
+export default CharacterItem;

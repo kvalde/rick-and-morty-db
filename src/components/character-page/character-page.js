@@ -1,15 +1,20 @@
-const CharacterPage = (props) => {
-    
-    const item = props.characters.find(el => el.id === +props.match.params.id)
+const CharacterPage = ({characters, match}) => {
+    const item = characters.find(el => el.id === +match.params.id)
     const {name, image, status, gender, species, episode} = item;
     return (
-        <div className = "item_page">
-                <div className="menu__title">Name: {name}</div>
-                <img className="menu__img" src={image} alt={name}></img>
-                <div className="menu__title">Status: {status}</div>
-                <div className="menu__title">Gender: {gender}</div>
-                <div className="menu__title">Species: {species}</div>
-                <div className="">Episodes: {episode}</div>
+        <div className="d-flex justify-content-center">
+            <div className = "card" style={{width: "18rem"}}>
+                <img className="card-img-top" src={image} alt={name}></img>
+                <div className="card-body">
+                    <div className="card-title">Name: {name}</div>
+                    <div className="card-title">Status: {status}</div>
+                    <div className="card-title">Gender: {gender}</div>
+                    <div className="card-title">Species: {species}</div>
+                    <div className="card-text">Episodes: {episode.map(elem => {
+                        return elem.match(/\d/g).join("")
+                    }).join(", ")}</div>
+                </div>
+            </div>
         </div>
     )
 }
