@@ -1,16 +1,15 @@
-import { connect } from "react-redux";
 import CharacterItem from "../character-item/character-item";
 import { Field, Form, Formik, useFormik } from "formik";
-import { getCharacters } from "../../actions";
+import { useState } from "react";
 
 const CharactersPage = ({
-    characters,
+    recievedCharacters,
     prevPageHandler,
     nextPageHandler,
-    getCharacters,
     theme,
 }) => {
-    characters.splice(12, 8);
+    recievedCharacters.splice(12, 8);
+    const [characters, setCharacters] = useState(recievedCharacters);
     let btnClasses;
     theme === "light"
         ? (btnClasses = "btn btn-outline-dark m-2")
@@ -20,22 +19,23 @@ const CharactersPage = ({
             gender: "",
         },
         onSubmit: (values, actions) => {
-            if (values.gender === "") getCharacters(characters);
+            if (values.gender === "All") setCharacters(recievedCharacters);
             if (values.gender === "Male") {
-                const maleCharacters = characters.filter(
+                const maleCharacters = recievedCharacters.filter(
                     (character) => character.gender === "Male"
                 );
-                getCharacters(maleCharacters);
+                setCharacters(() => maleCharacters);
             }
             if (values.gender === "Female") {
-                const femaleCharacters = characters.filter(
+                const femaleCharacters = recievedCharacters.filter(
                     (character) => character.gender === "Female"
                 );
-                getCharacters(femaleCharacters);
+                setCharacters(() => femaleCharacters);
             }
             actions.resetForm({});
-        },
-    });
+            }
+        }
+    );
     return (
         <>
             <div className="container">
@@ -45,6 +45,21 @@ const CharactersPage = ({
                         <Form onSubmit={formik.handleSubmit}>
                             <div id="my-radio-group">Gender</div>
                             <div role="group" aria-labelledby="my-radio-group">
+                                <div className="form-check col">
+                                    <label className="form-check-label">
+                                        <Field
+                                            className="form-check-input"
+                                            checked={
+                                                formik.values.gender === "All"
+                                            }
+                                            onChange={formik.handleChange}
+                                            type="radio"
+                                            name="gender"
+                                            value="All"
+                                        />
+                                        All
+                                    </label>
+                                </div>
                                 <div className="form-check col">
                                     <label className="form-check-label">
                                         <Field
@@ -109,14 +124,4 @@ const CharactersPage = ({
     );
 };
 
-const mapStateToProps = ({ characters }) => {
-    return {
-        characters,
-    };
-};
-
-const mapDispatchToProps = {
-    getCharacters,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CharactersPage);
+export default CharactersPage;

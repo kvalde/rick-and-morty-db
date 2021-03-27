@@ -5,27 +5,13 @@ import AddNewCharacterPage from "../add-new-character-page/add-new-character-pag
 import AppHeader from "../app-header/app-header";
 import CharacterPage from "../character-page/character-page";
 import CharactersPage from "../characters-page/characters-page";
-import { getCharacters } from "../../actions";
 import "./App.css";
-import { connect } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../GlodalStyles/GlobalStyles";
 import { lightTheme, darkTheme } from "../Theme/Themes";
 import { useDarkMode } from "../useDarkMode/use-dark-mode";
 
-// <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-
-// <>
-
-// <GlobalStyles/>
-
-// <button onClick={themeToggler}>Switch Theme</button>
-
-// </>
-
-// </ThemeProvider>
-
-function App({ getCharacters }) {
+function App() {
     const [theme, themeToggler, mountedComponent] = useDarkMode();
     const themeMode = theme === "light" ? lightTheme : darkTheme;
     const [characters, setCharacters] = useState();
@@ -49,7 +35,6 @@ function App({ getCharacters }) {
             setCharacters(res.data.results);
         };
         fetchData();
-        if (characters) getCharacters(characters);
     });
 
     if (!mountedComponent) return <div />;
@@ -65,6 +50,7 @@ function App({ getCharacters }) {
                         exact
                         render={() => (
                             <CharactersPage
+                                recievedCharacters={characters}
                                 theme={theme}
                                 nextPageHandler={nextPageHandler}
                                 prevPageHandler={prevPageHandler}
@@ -92,8 +78,4 @@ function App({ getCharacters }) {
     );
 }
 
-const mapDispatchToProps = {
-    getCharacters,
-};
-
-export default connect(null, mapDispatchToProps)(App);
+export default (App);
