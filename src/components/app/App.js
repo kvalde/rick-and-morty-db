@@ -1,16 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router";
-import addNewCharacterPage from "../add-new-character-page/add-new-character-page";
+import AddNewCharacterPage from "../add-new-character-page/add-new-character-page";
 import AppHeader from "../app-header/app-header";
 import CharacterPage from "../character-page/character-page";
 import CharactersPage from "../characters-page/characters-page";
 import { getCharacters } from "../../actions";
 import "./App.css";
 import { connect } from "react-redux";
-import { ThemeProvider } from "styled-components"
-import { GlobalStyles } from '../GlodalStyles/GlobalStyles';
-import { lightTheme, darkTheme } from '../Theme/Themes';
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "../GlodalStyles/GlobalStyles";
+import { lightTheme, darkTheme } from "../Theme/Themes";
+import { useDarkMode } from "../useDarkMode/use-dark-mode";
 
 // <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
 
@@ -25,8 +26,8 @@ import { lightTheme, darkTheme } from '../Theme/Themes';
 // </ThemeProvider>
 
 function App({ getCharacters }) {
-    const [theme, setTheme] = useState('light');
-    const themeToggler = () => {theme === 'light' ? setTheme('dark') : setTheme('light')}
+    const [theme, themeToggler, mountedComponent] = useDarkMode();
+    const themeMode = theme === "light" ? lightTheme : darkTheme;
     const [characters, setCharacters] = useState();
     const [page, setPage] = useState(1);
 
@@ -48,24 +49,23 @@ function App({ getCharacters }) {
             setCharacters(res.data.results);
         };
         fetchData();
-        if(characters)getCharacters(characters);
-    },);
+        if (characters) getCharacters(characters);
+    });
 
-    
-
+    if (!mountedComponent) return <div />;
     if (!characters) return <div>Loading...</div>;
     return (
-        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-        <GlobalStyles/>
-        <div className="App">
-                <button onClick={themeToggler}>Switch Theme</button>
-                <AppHeader />
+        <ThemeProvider theme={themeMode}>
+            <GlobalStyles />
+            <div className="App">
+                <AppHeader theme={theme} toggleTheme={themeToggler} />
                 <Switch>
                     <Route
                         path="/"
                         exact
                         render={() => (
                             <CharactersPage
+                                theme={theme}
                                 nextPageHandler={nextPageHandler}
                                 prevPageHandler={prevPageHandler}
                             />
@@ -74,22 +74,26 @@ function App({ getCharacters }) {
                     <Route
                         path="/newcharacter"
                         exact
-                        component={addNewCharacterPage}
+                        render={() => <AddNewCharacterPage theme={theme} />}
                     />
                     <Route
                         path="/:id"
                         render={({ match }) => (
-                            <CharacterPage characters={characters} match={match} />
+                            <CharacterPage
+                                theme={theme}
+                                characters={characters}
+                                match={match}
+                            />
                         )}
                     />
                 </Switch>
-        </div>
+            </div>
         </ThemeProvider>
     );
 }
 
 const mapDispatchToProps = {
-  getCharacters
-}
+    getCharacters,
+};
 
 export default connect(null, mapDispatchToProps)(App);

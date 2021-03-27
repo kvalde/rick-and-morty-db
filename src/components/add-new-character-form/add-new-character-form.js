@@ -3,7 +3,11 @@ import { useFormik, Field, Formik, Form } from "formik";
 import { addOwnCharacter } from "../../actions";
 import { connect } from "react-redux";
 
-const AddNewCharacterForm = ({ addOwnCharacter }) => {
+const AddNewCharacterForm = ({ addOwnCharacter, theme }) => {
+    let btnClasses;
+    theme === "light"
+        ? (btnClasses = "btn btn-outline-dark")
+        : (btnClasses = "btn btn-outline-light");
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -78,7 +82,7 @@ const AddNewCharacterForm = ({ addOwnCharacter }) => {
                     <div>Picked: {formik.values.gender}</div>
                 </div>
 
-                <button className="btn btn-outline-dark" type="submit">
+                <button className={btnClasses} type="submit">
                     Submit
                 </button>
             </Form>

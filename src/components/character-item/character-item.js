@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 
-const CharacterItem = ({ name, status, gender, image, id }) => {
+const CharacterItem = ({ name, status, gender, image, id, theme }) => {
+    let classes;
+    theme === "light"
+        ? (classes = "card text-dark bg-light col-12 m-3")
+        : (classes = "card text-white bg-dark col-12 m-3");
     return (
         <>
-            <div className="card col-12 m-3" style={{ width: "18rem" }} key={id}>
+            <div className={classes} style={{ width: "18rem" }} key={id}>
                 <Link to={`/${id}`}>
                     <img className="card-img-top" src={image} alt={name}></img>
                     <div className="card-body">

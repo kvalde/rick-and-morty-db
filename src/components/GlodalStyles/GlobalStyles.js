@@ -1,4 +1,4 @@
-import { createGlobalStyle} from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 
@@ -12,4 +12,6 @@ font-family: Tahoma, Helvetica, Arial, Roboto, sans-serif;
 
 transition: all 0.50s linear;
 
-}`
+.card-theme: ${({ theme }) => theme.backgroundColor}
+
+}`;

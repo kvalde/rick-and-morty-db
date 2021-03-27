@@ -1,27 +1,23 @@
 const initialState = {
     ownCharacters: [],
     characters: [],
-    allCharacters: []
-}
+    allCharacters: [],
+};
 
 function reducer(state = initialState, action) {
-    switch(action.type) {
+    switch (action.type) {
         case "ADD_OWN_CHARACTER":
             return {
                 ...state,
-                ownCharacters: [...state.ownCharacters, action.payload]
+                ownCharacters: [...state.ownCharacters, action.payload],
             };
         case "GET_CHARACTERS":
             return {
                 ...state,
-                characters: action.payload
-            }
-        case "GET_ALL_CHARACTERS":
-            return {
-                ...state,
-                allCharacters: [...state.allCharacters, action.payload]
-            }
-            default: return state;
+                characters: action.payload,
+            };
+        default:
+            return state;
     }
 }
 

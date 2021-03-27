@@ -1,7 +1,7 @@
 export const lightTheme = {
     body: "#FFF",
 
-    text: "#363537",
+    text: "#000000",
 
     toggleBorder: "#FFF",
 
@@ -11,7 +11,7 @@ export const lightTheme = {
 export const darkTheme = {
     body: "#363537",
 
-    text: "#FAFAFA",
+    text: "#FFFFFF",
 
     toggleBorder: "#6B8096",
 
